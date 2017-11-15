@@ -23,7 +23,7 @@ W = zeros(m,k);
 
 iteration = 0;
 error = 1;
-eps = 0.01
+eps = 0.0001
 while error > eps
     fprintf('Iteration: %d\n',iteration);
     iteration = iteration + 1;

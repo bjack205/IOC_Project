@@ -13,7 +13,7 @@ sigma_initial = [];
 Xi = [];
 X = [];
 for i = 1:k
-    mu_initial{i} = (i^2)*ones(1,n)
+    mu_initial{i} = 5*randn(1,n)
     sigma_initial{i} = 2*rand(1)*eye(n);
     Xi{i} = randn(examples, n) * chol(sigma_initial{i}) + repmat(mu_initial{i}, examples, 1);
     X = cat(1,X,Xi{i});
@@ -24,7 +24,7 @@ end
 
 %% Visualize Mixture of Gaussians
 gridSize = 100;
-u = linspace(-5, 20, gridSize);
+u = linspace(-20, 20, gridSize);
 [A B] = meshgrid(u, u);
 gridX = [A(:), B(:)];
 
