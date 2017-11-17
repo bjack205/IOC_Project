@@ -4,7 +4,7 @@ function [ p ] = pdf_gaussian_multi(X,mu,sigma)
 % examples, each with n features)
 
 [m,n] = size(X);
-A = X-repmat(mu,m,1);
-p = 1/(2*pi*det(sigma)^(1/2))*exp(-0.5*sum(((A*inv(sigma)).*A)',1))';
+A = (X-repmat(mu,m,1)
+p = 1/(2*pi*det(sigma)^(1/2))*exp(-0.5*sum(((X-repmat(mu,m,1))*inv(sigma).*(X-repmat(mu,m,1)))',2));
 end
 

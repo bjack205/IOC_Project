@@ -14,8 +14,8 @@ Xi = [];
 X = [];
 for i = 1:k
     mu_initial{i} = 5*randn(1,n);
-    %tmp = rand(n,n);
-    sigma_initial{i} = rand(1)*eye(n);%tmp'*tmp;
+    tmp = rand(n,n);
+    sigma_initial{i} = tmp'*tmp;
     Xi{i} = randn(examples, n) * chol(sigma_initial{i}) + repmat(mu_initial{i}, examples, 1);
     X = cat(1,X,Xi{i});
 end
@@ -58,20 +58,9 @@ title('Mixture of Gaussians')
 axis square
 
 %% Run EM multiple times on same training set
-figure
 for i = 1:4
     [mu, sigma] = EM_mix_gauss(X,k,.00001);
-    subplot(2,2,i)
-    hold on;
-    for j = 1:k
-        % plot raw data
-        plot(Xi{j}(:, 1), Xi{j}(:, 2), 'o');
-    end
-    for j = 1:k
-        % plot contour from know distributions
-        z = pdf_gaussian_multi(gridX,mu(j,:), sigma{j});
-        contour(u, u, reshape(z, gridSize, gridSize),'k');
-    end
-    title('Different EM initializations')
-    axis square 
+    
+
+    
 end

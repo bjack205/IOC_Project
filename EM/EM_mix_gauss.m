@@ -1,8 +1,9 @@
-function [ mu, sigma ] = EM_mix_gauss( X,k )
+function [ mu, sigma ] = EM_mix_gauss( X,k,eps )
 % Implementation of the EM algorithm to fit a mixture of Gaussians.
 
 % X is all training examples (one training example per row). k is the
-% number of Gaussians x is theorized to be drawn from.
+% number of Gaussians x is theorized to be drawn from. eps is the
+% convergence criteria.
 [m,n] = size(X);
 
 % initialize k cluster centroids randomly from the data
@@ -23,20 +24,20 @@ W = zeros(m,k);
 
 iteration = 0;
 error = 1;
-eps = 0.0001
+
 while error > eps
     fprintf('Iteration: %d\n',iteration);
     iteration = iteration + 1;
-    
+
 % E-step
     p = zeros(m,k);
     pw = zeros(m,k);
-    for i = 1:m
-        for j = 1:k
-            p(i,j) = pdf_gaussian_multi(X(i,:)',mu(j,:)',sigma{j});
-            pw(i,j) = p(i,j)*phi(j);
-        end
+
+    for j = 1:k
+        p(:,j) = pdf_gaussian_multi(X,mu(j,:),sigma{j});
+        pw(:,j) = p(:,j)*phi(j);
     end
+
     W = pw./repmat(sum(pw,2),1,k);
 
 % M-step
@@ -58,6 +59,5 @@ while error > eps
     end
     error = sum((mu-mu_old).^2);
 end
-
 end
 
